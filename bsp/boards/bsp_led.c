@@ -8,8 +8,8 @@ extern TIM_HandleTypeDef htim5;
   * @retval         none
   */
 /**
-  * @brief          ÏÔÊ¾RGB
-  * @param[in]      aRGB:0xaaRRGGBB,'aa' ÊÇÍ¸Ã÷¶È,'RR'ÊÇºìÉ«,'GG'ÊÇÂÌÉ«,'BB'ÊÇÀ¶É«
+  * @brief          æ˜¾ç¤ºRGB
+  * @param[in]      aRGB:0xaaRRGGBB,'aa' æ˜¯é€æ˜åº¦,'RR'æ˜¯çº¢è‰²,'GG'æ˜¯ç»¿è‰²,'BB'æ˜¯è“è‰²
   * @retval         none
   */
 void aRGB_led_show(uint32_t aRGB)
