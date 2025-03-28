@@ -26,10 +26,14 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "led_flow_task.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+
+osThreadId led_RGB_flow_handle;
 
 /* USER CODE END PTD */
 
@@ -124,6 +128,10 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+
+  osThreadDef(led, led_RGB_flow_task, osPriorityNormal, 0, 256);
+  led_RGB_flow_handle = osThreadCreate(osThread(led), NULL);
+
   /* USER CODE END RTOS_THREADS */
 
 }
