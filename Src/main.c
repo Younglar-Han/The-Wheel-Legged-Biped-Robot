@@ -35,6 +35,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "bsp_buzzer.h"
+#include "bsp_heatImu.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

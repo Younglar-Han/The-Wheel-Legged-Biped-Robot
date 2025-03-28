@@ -749,6 +749,11 @@
               <FileType>1</FileType>
               <FilePath>..\bsp\boards\bsp_buzzer.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_heatImu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\boards\bsp_heatImu.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
