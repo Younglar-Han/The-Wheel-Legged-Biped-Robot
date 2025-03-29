@@ -36,6 +36,7 @@
 /* USER CODE BEGIN Includes */
 #include "bsp_buzzer.h"
 #include "bsp_heatImu.h"
+#include "bsp_rc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -141,6 +142,8 @@ int main(void)
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2);
   HAL_TIM_Base_Start(&htim10);
   HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
+  
+  bsp_remote_control_init();
 
   /* USER CODE END 2 */
 
