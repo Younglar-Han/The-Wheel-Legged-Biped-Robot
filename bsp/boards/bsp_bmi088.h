@@ -7,6 +7,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+#include "bsp_bmi088_middleware.h"
 
 #define BMI088_TEMP_FACTOR 0.125f
 #define BMI088_TEMP_OFFSET 23.0f

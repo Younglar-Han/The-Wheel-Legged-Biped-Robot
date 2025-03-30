@@ -1,6 +1,6 @@
 #include "bsp_bmi088.h"
 #include "BMI088reg.h"
-#include "bsp_bmi088_middleware.h"
+
 
 extern TIM_HandleTypeDef htim8;
 extern SPI_HandleTypeDef hspi1;
