@@ -55,7 +55,7 @@ void ist8310_IIC_write_muli_reg(uint8_t reg, uint8_t *data, uint8_t len)
 }
 void ist8310_delay_ms(uint16_t ms)
 {
-    osDelay(ms);
+    delay_ms(ms);
 }
 void ist8310_delay_us(uint16_t us)
 {
