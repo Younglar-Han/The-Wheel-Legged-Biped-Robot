@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "led_flow_task.h"
+#include "main_task.hpp"
 
 /* USER CODE END Includes */
 
@@ -34,6 +35,7 @@
 /* USER CODE BEGIN PTD */
 
 osThreadId led_RGB_flow_handle;
+osThreadId main_Handle;
 
 /* USER CODE END PTD */
 
@@ -131,6 +133,9 @@ void MX_FREERTOS_Init(void) {
 
   osThreadDef(led, led_RGB_flow_task, osPriorityNormal, 0, 256);
   led_RGB_flow_handle = osThreadCreate(osThread(led), NULL);
+
+  osThreadDef(main, main_task, osPriorityRealtime, 0, 256);
+  main_Handle = osThreadCreate(osThread(main), NULL);
 
   /* USER CODE END RTOS_THREADS */
 

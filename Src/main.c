@@ -145,7 +145,6 @@ int main(void)
   HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
 	
   delay_init();
-  bsp_remote_control_init();
 
   /* USER CODE END 2 */
 
