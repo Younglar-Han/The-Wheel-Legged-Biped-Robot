@@ -4,9 +4,11 @@
 
 #include "Time.hpp"
 #include "Dr16.hpp"
+#include "CanManager.hpp"
+#include "CanMsgDispatcher.hpp"
+#include "LKCanMotorCommander.hpp"
 
 Dr16 *pDr16 = Dr16::Instance();
-uint32_t time;
 
 void main_task(void const * argument)
 {
@@ -14,8 +16,12 @@ void main_task(void const * argument)
     while(1)
     {
         Time::Tick();
-        time = Time::GetTick();
         Dr16::Instance()->Update();
+        CanMsgDispatcher::Instance()->Update();
+        if (Time::GetTick() % 2 == 0)
+            LKCanMotorCommander::Instance()->Update();
+
+        CanManager::Instance()->Update();
         osDelay(1);
     }
 }
