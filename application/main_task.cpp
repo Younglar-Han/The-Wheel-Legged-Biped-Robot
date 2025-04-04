@@ -18,8 +18,6 @@
 #include "LKCanMotorCommander.hpp"
 #include "STP23L.hpp"
 
-const uint32_t MS_PRE_TICK = 1;
-
 // Test stuff
 Testbot testbot;
 
@@ -32,12 +30,10 @@ STP23L *stp23l = STP23L::Instance();
 LKCanMotorCommander *LK = LKCanMotorCommander::Instance();
 Dr16 *dr16 = Dr16::Instance();
 
-static uint8_t bmi088_init_flag = 0;
-static uint32_t bmi088_count = 0;
 float use_rate;
-static uint8_t flag = 0;
-
-float count = 965.0f;
+float count = 0.0f;
+uint32_t init_time = 0;
+bool is_init = false;
 
 
 void main_task(void const * argument)
@@ -70,8 +66,14 @@ void main_task(void const * argument)
 
         CanManager::Instance()->Update();
 
-        count += 1.0f;
+        if  (is_init == false)
+        {
+            is_init = true;
+            init_time = HAL_GetTick();
+            count = (float)init_time;
+        }
         use_rate = count / ((float)HAL_GetTick() / 1000.0f);
+        count += 1.0f;
         osDelay(1);
     }
 }
