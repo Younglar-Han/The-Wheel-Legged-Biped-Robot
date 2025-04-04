@@ -12,11 +12,11 @@ extern void BMI088_delay_ms(uint16_t ms);
 extern void BMI088_delay_us(uint16_t us);
 
 #if defined(BMI088_USE_SPI)
-extern void bsp_select_bmi088_acc(void);
-extern void bsp_deselect_bmi088_acc(void);
+extern void BMI088_ACCEL_NS_L(void);
+extern void BMI088_ACCEL_NS_H(void);
 
-extern void bsp_select_bmi088_gyro(void);
-extern void bsp_deselect_bmi088_gyro(void);
+extern void BMI088_GYRO_NS_L(void);
+extern void BMI088_GYRO_NS_H(void);
 
 extern uint8_t BMI088_read_write_byte(uint8_t reg);
 

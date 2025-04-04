@@ -4,6 +4,7 @@
 #include "bsp_bmi088.h"
 #include "Pid.hpp"
 #include "bsp_heatImu.h"
+#include "common_define.h"
 
 class BMI088
 {
@@ -26,9 +27,7 @@ public:
     uint32_t time_count = 0;
 
     void BspInit();
-    int AccInit();
-    int GyroInit();
-    void ReadData();
+    void Update();
 
     float GetAccX(){return m_ax;}
     float GetAccY(){return m_ay;}
@@ -43,8 +42,6 @@ public:
     void setTemperature(float _temperature){temperature = _temperature;}
 private:
     BMI088():m_send_buffer_count(0),m_time_ms_count(0){}
-    void ReadRegister(uint8_t _address, uint8_t* _pData, uint32_t _len,BMI088Cs cs);
-    void WriteRegister(uint8_t _address, uint8_t* _pData, uint32_t _len,BMI088Cs cs);
     uint8_t m_send_buffer[16];
 
     uint8_t m_send_buffer_count;
@@ -62,6 +59,8 @@ private:
 	float m_wy;
 	float m_wz;
     float temperature;
+
+    fp32 gyro[3], accel[3], temp;
 };
 
 #endif

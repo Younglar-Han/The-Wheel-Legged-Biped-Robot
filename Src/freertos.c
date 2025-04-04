@@ -134,7 +134,7 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(led, led_RGB_flow_task, osPriorityNormal, 0, 256);
   led_RGB_flow_handle = osThreadCreate(osThread(led), NULL);
 
-  osThreadDef(main, main_task, osPriorityRealtime, 0, 256);
+  osThreadDef(main, main_task, osPriorityRealtime, 0, 4096);
   main_Handle = osThreadCreate(osThread(main), NULL);
 
   /* USER CODE END RTOS_THREADS */
