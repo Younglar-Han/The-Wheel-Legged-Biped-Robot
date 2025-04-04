@@ -17,15 +17,7 @@ public:
 
     ~BMI088(){}
 
-    enum BMI088Cs
-    {
-        CS_Acc,
-        CS_Gyro
-    };
-
     Pid TemperatruePid;
-    uint32_t time_count = 0;
-
     void BspInit();
     void Update();
 
@@ -41,11 +33,6 @@ public:
     float GetTemperature(){return temperature;}
     void setTemperature(float _temperature){temperature = _temperature;}
 private:
-    BMI088():m_send_buffer_count(0),m_time_ms_count(0){}
-    uint8_t m_send_buffer[16];
-
-    uint8_t m_send_buffer_count;
-    int m_time_ms_count;
 
     float m_ax;
     float m_ay;

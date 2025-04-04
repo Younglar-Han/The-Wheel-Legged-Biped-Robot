@@ -6,6 +6,12 @@
 void BMI088::BspInit()
 {
     BMI088_init();
+    TemperatruePid.Init(); 
+    TemperatruePid.kp = 1000;
+    TemperatruePid.ki = 100;
+    TemperatruePid.kd = 0;
+    TemperatruePid.maxOut = 4999;
+    TemperatruePid.maxIOut = 3000;
 }
 
 void BMI088::Update()
@@ -22,4 +28,10 @@ void BMI088::Update()
     m_acc_angle_x = atan2f(m_ay, sqrtf(m_ax * m_ax + m_az * m_az)) * 180.0f / PI;
     m_acc_angle_y = atan2f(-m_ax, sqrtf(m_ay * m_ay + m_az * m_az)) * 180.0f / PI;
     m_acc_angle_z = atan2f(m_az, sqrtf(m_ax * m_ax + m_ay * m_ay)) * 180.0f / PI;
+
+    TemperatruePid.ref = 42.0f;
+    TemperatruePid.fdb = temperature;
+    TemperatruePid.UpdateResult();
+    uint16_t pwmresult = (uint16_t)(TemperatruePid.result);
+    bsp_pwm_set(pwmresult);//设置占空比
 }
