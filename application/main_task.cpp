@@ -2,16 +2,28 @@
 #include "cmsis_os.h"
 #include "main.h"
 
-#include "Time.hpp"
+#include "Buzzer.hpp"
 #include "Dr16.hpp"
 #include "CanManager.hpp"
 #include "CanMsgDispatcher.hpp"
-#include "LKCanMotorCommander.hpp"
 
-Dr16 *pDr16 = Dr16::Instance();
+#include "BoardPacket.hpp"
+#include "Time.hpp"
+
+#include "Testbot.hpp"
+
+#include "IST8310.hpp"
+#include "BMI088.hpp"
+#include "AHRSEstimator.hpp"
+#include "LKCanMotorCommander.hpp"
+#include "STP23L.hpp"
+
+
 
 void main_task(void const * argument)
 {
+    
+    
     Dr16::Instance()->Init();
     while(1)
     {

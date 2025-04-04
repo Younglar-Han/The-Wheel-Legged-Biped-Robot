@@ -34,12 +34,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_buzzer.h"
-#include "bsp_heatImu.h"
-#include "bsp_rc.h"
 #include "bsp_delay.h"
-#include "IST8310.hpp"
-#include "BMI088.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,8 +55,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-IST8310 ist8310;
-BMI088 *bmi088 = BMI088::Instance();
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

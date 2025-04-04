@@ -472,11 +472,12 @@ void LegController::CalcF()
     // 跳跃模式
     if (jumping)
     {
+        uint32_t jump_tick = 0;
         switch (jump_state)
         {
         // 0: 腿部下沉，准备跳跃
         case 0:
-            uint32_t jump_tick = Time::GetTick() - jump_time;
+            jump_tick = Time::GetTick() - jump_time;
             leftLegLengthPid.ref = LEG_MID_HEIGHT - jump_tick * 0.0003f;
             leftLegLengthPid.fdb = length_l;
             leftLegLengthPid.UpdateResult();
