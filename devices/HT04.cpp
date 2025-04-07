@@ -100,7 +100,8 @@ void HT04::SendControlCommand(float current)
     _txMessage.Data[7] = _current & 0xFF;
 
     CAN_HandleTypeDef *_canHandle = (_can == CAN1) ? &hcan1 : &hcan2;
-    HAL_CAN_AddTxMessage(_canHandle, &_txMessage.Header, _txMessage.Data, NULL);
+    uint32_t TxMailbox;
+    HAL_CAN_AddTxMessage(_canHandle, &_txMessage.Header, _txMessage.Data, &TxMailbox);
 }
 
 void HT04::EnterMotorMode()
@@ -122,8 +123,9 @@ void HT04::EnterMotorMode()
     _txMessage.Data[6] = 0xFF;
     _txMessage.Data[7] = 0xFC;
 
-    CAN_HandleTypeDef *_canHandle = (_can == CAN1) ? &hcan1 : &hcan2;
-    HAL_CAN_AddTxMessage(_canHandle, &_txMessage.Header, _txMessage.Data, NULL);
+    CAN_HandleTypeDef *_canHandle = ((_can == CAN1) ? &hcan1: &hcan2);
+    uint32_t TxMailbox;
+    HAL_CAN_AddTxMessage(_canHandle, &_txMessage.Header, _txMessage.Data, &TxMailbox);
 }
 
 void HT04::ExitMotorMode()
@@ -146,7 +148,8 @@ void HT04::ExitMotorMode()
     _txMessage.Data[7] = 0xFD;
 
     CAN_HandleTypeDef *_canHandle = (_can == CAN1) ? &hcan1 : &hcan2;
-    HAL_CAN_AddTxMessage(_canHandle, &_txMessage.Header, _txMessage.Data, NULL);
+    uint32_t TxMailbox;
+    HAL_CAN_AddTxMessage(_canHandle, &_txMessage.Header, _txMessage.Data, &TxMailbox);
 }
 
 void HT04::SetZeroPos()
@@ -169,7 +172,8 @@ void HT04::SetZeroPos()
     _txMessage.Data[7] = 0xFE;
 
     CAN_HandleTypeDef *_canHandle = (_can == CAN1) ? &hcan1 : &hcan2;
-    HAL_CAN_AddTxMessage(_canHandle, &_txMessage.Header, _txMessage.Data, NULL);
+    uint32_t TxMailbox;
+    HAL_CAN_AddTxMessage(_canHandle, &_txMessage.Header, _txMessage.Data, &TxMailbox);
 }
 
 void HT04::Motivate()

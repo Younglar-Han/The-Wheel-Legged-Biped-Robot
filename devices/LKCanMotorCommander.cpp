@@ -27,7 +27,8 @@ void LKCanMotorCommander::Update()
             _txMessage.Data[6] = msgBuffer[i][3];
             _txMessage.Data[7] = msgBuffer[i][3] >> 8;
 
-            HAL_CAN_AddTxMessage(_can, &_txMessage.Header, _txMessage.Data, NULL);
+            uint32_t TxMailbox;
+            HAL_CAN_AddTxMessage(_can, &_txMessage.Header, _txMessage.Data, &TxMailbox);
 
             dirtyFlag[i] = false;
         }

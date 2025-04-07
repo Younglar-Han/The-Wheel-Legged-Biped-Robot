@@ -21,7 +21,8 @@ void CanManager::SendOnePacket()
         _txMessage.Header.DLC = 8;
         memcpy(_txMessage.Data, &_stream.m_MsgBuffer[_stream.m_LenSent], 8);
         _stream.m_LenSent += 8;
-        HAL_CAN_AddTxMessage(_stream.m_pCan, &_txMessage.Header, _txMessage.Data, NULL);
+        uint32_t TxMailbox;
+        HAL_CAN_AddTxMessage(_stream.m_pCan, &_txMessage.Header, _txMessage.Data, &TxMailbox);
     }
     else
     {
@@ -29,8 +30,8 @@ void CanManager::SendOnePacket()
         _txMessage.Header.DLC = _len;
         memcpy(_txMessage.Data, &_stream.m_MsgBuffer[_stream.m_LenSent], _len);
         _stream.m_LenSent += _len;
-
-        HAL_CAN_AddTxMessage(_stream.m_pCan, &_txMessage.Header, _txMessage.Data, NULL);
+        uint32_t TxMailbox;
+        HAL_CAN_AddTxMessage(_stream.m_pCan, &_txMessage.Header, _txMessage.Data, &TxMailbox);
 
 
         m_SendFront = (m_SendFront + 1) % 8;

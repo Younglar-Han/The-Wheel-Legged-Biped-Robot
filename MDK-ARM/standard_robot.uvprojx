@@ -1182,6 +1182,11 @@
               <FileType>1</FileType>
               <FilePath>..\bsp\boards\bsp_tof.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\boards\bsp_can.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
