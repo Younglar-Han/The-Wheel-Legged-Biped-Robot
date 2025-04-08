@@ -26,7 +26,7 @@
  *  
  *----------------------------------------------------------------------------
  *
- * Portions Copyright © 2016 STMicroelectronics International N.V. All rights reserved.
+ * Portions Copyright ï¿½ 2016 STMicroelectronics International N.V. All rights reserved.
  * Portions Copyright (c) 2013 ARM LIMITED
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
@@ -73,10 +73,10 @@
 #elif defined ( __GNUC__ )
 
   #define __ASM            __asm                                      /*!< asm keyword for GNU Compiler          */
-  #define __INLINE         inline                                     /*!< inline keyword for GNU Compiler       */
-  #define __STATIC_INLINE  static inline
+//  #define __INLINE         inline                                     /*!< inline keyword for GNU Compiler       */
+//  #define __STATIC_INLINE  static inline
 
-  #include "cmsis_gcc.h"
+  #include "cmsis_armclang.h"
 
 
 /*

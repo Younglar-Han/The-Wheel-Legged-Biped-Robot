@@ -1,7 +1,6 @@
 #ifndef LEGCONTROLLER_HPP
 #define LEGCONTROLLER_HPP
 
-#define FLT_EPSILON 1.192e-07F
 #include <math.h>
 #include "RobotEngine.hpp"
 #include "StateMachine.hpp"

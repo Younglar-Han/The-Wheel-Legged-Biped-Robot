@@ -15,22 +15,22 @@ Pid::Pid() : mode(PID_POSITION),
     last_updateTick = Time::GetTick();
 }
 
-Pid::Pid(PidModeType mode = PID_POSITION,
-         float p = 0.0f,
-         float i = 0.0f,
-         float d = 0.0f,
-         float max = 0.0f,
-         float imax = 0.0f) : mode(mode),
-                              kp(p),
-                              ki(i),
-                              kd(d),
-                              maxOut(max),
-                              maxIOut(imax),
-                              isPitchSpd(false),
-                              isPitch(false)
-{
-    last_updateTick = Time::GetTick();
-}
+// Pid::Pid(PidModeType mode,
+//          float p,
+//          float i,
+//          float d,
+//          float max,
+//          float imax) :  mode(mode),
+//                         kp(p),
+//                         ki(i),
+//                         kd(d),
+//                         maxOut(max),
+//                         maxIOut(imax),
+//                         isPitchSpd(false),
+//                         isPitch(false)
+// {
+//     last_updateTick = Time::GetTick();
+// }
 
 void Pid::Init(void)
 {

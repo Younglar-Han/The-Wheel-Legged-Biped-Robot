@@ -1,7 +1,6 @@
 #ifndef WHEELCONTROLLER_HPP
 #define WHEELCONTROLLER_HPP
 
-#define FLT_EPSILON 1.192e-07F
 #define CENTER_IMU_L -0.143f //-142.96mm x left11.55mm y -90.6mm z
 #define CENTER_IMU_W -0.01155f
 #define CENTER_IMU_H -0.0906f

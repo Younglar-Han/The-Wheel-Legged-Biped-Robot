@@ -45,7 +45,12 @@ public:
     uint32_t last_updateTick;
 
     Pid();
-    Pid(PidModeType mode, float p, float i, float d, float max, float imax);
+    // Pid(PidModeType mode = PID_POSITION,
+    //     float p = 0.0f,
+    //     float i = 0.0f,
+    //     float d = 0.0f,
+    //     float max = 0.0f,
+    //     float imax = 0.0f);    
 
     void Init();
     void UpdateResult();

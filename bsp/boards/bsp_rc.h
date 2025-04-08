@@ -59,14 +59,14 @@ extern "C" {
 // #define KEY_PRESSED_OFFSET_V            ((uint16_t)1 << 14)
 // #define KEY_PRESSED_OFFSET_B            ((uint16_t)1 << 15)
 /* ----------------------- Data Struct ------------------------------------- */
-typedef __packed struct
+typedef struct __attribute__((packed))
 {
-        __packed struct
+        struct __attribute__((packed))
         {
                 int16_t ch[6];
                 int16_t s[4];
         } rc;
-        __packed struct
+        struct __attribute__((packed))
         {
                 int16_t x;
                 int16_t y;
@@ -74,7 +74,7 @@ typedef __packed struct
                 uint8_t press_l;
                 uint8_t press_r;
         } mouse;
-        __packed struct
+        struct __attribute__((packed))
         {
                 uint16_t v;
         } key;
