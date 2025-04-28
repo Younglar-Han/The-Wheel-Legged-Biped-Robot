@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
   <diagram name="第 1 页" id="47uNOOpgvLLNZsxWTuy7">
-    <mxGraphModel dx="1228" dy="849" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1044" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -29,7 +29,7 @@
         <mxCell id="Tezzr9UvNSHUi5PQrRLW-72" value="中心分电板" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#b0e3e6;strokeColor=#0e8088;" parent="1" vertex="1">
           <mxGeometry x="420" y="390" width="550" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="Tezzr9UvNSHUi5PQrRLW-74" value="左后关节电机&lt;div&gt;ID = 4&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Tezzr9UvNSHUi5PQrRLW-74" value="左后关节电机&lt;div&gt;ID = 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="420" y="490" width="150" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Tezzr9UvNSHUi5PQrRLW-77" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#e51400;strokeColor=#B20000;" parent="1" edge="1">
@@ -59,7 +59,7 @@
             <mxPoint y="-40" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Tezzr9UvNSHUi5PQrRLW-91" value="左前关节电机&lt;div&gt;ID = 3&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Tezzr9UvNSHUi5PQrRLW-91" value="左前关节电机&lt;div&gt;ID = 1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="420" y="270" width="150" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Tezzr9UvNSHUi5PQrRLW-115" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" parent="1" source="Tezzr9UvNSHUi5PQrRLW-92" target="Tezzr9UvNSHUi5PQrRLW-114" edge="1">
@@ -114,7 +114,7 @@
         <mxCell id="Tezzr9UvNSHUi5PQrRLW-98" value="电机转接板" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" parent="1" vertex="1">
           <mxGeometry x="640" y="570" width="110" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Tezzr9UvNSHUi5PQrRLW-101" value="右后关节电机&lt;div&gt;ID = 1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Tezzr9UvNSHUi5PQrRLW-101" value="右后关节电机&lt;div&gt;ID = 3&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="820" y="490" width="150" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Tezzr9UvNSHUi5PQrRLW-102" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#e51400;strokeColor=#B20000;" parent="1" edge="1">
@@ -177,7 +177,7 @@
             <mxPoint y="40" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Tezzr9UvNSHUi5PQrRLW-107" value="右前关节电机&lt;div&gt;ID = 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Tezzr9UvNSHUi5PQrRLW-107" value="右前关节电机&lt;div&gt;ID = 4&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="820" y="270" width="150" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Tezzr9UvNSHUi5PQrRLW-108" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#e51400;strokeColor=#B20000;" parent="1" edge="1">
@@ -202,10 +202,10 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Tezzr9UvNSHUi5PQrRLW-110" value="轮电机&lt;div&gt;ID = 1&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
+        <mxCell id="Tezzr9UvNSHUi5PQrRLW-110" value="轮电机&lt;div&gt;ID = 0&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
           <mxGeometry x="420" y="570" width="150" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Tezzr9UvNSHUi5PQrRLW-112" value="轮电机&lt;div&gt;ID = 0&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
+        <mxCell id="Tezzr9UvNSHUi5PQrRLW-112" value="轮电机&lt;div&gt;ID = 1&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
           <mxGeometry x="820" y="570" width="150" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Tezzr9UvNSHUi5PQrRLW-114" value="A8S&lt;div&gt;接收器&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
@@ -256,7 +256,7 @@
         <mxCell id="Tezzr9UvNSHUi5PQrRLW-157" value="CAN1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=8;textOpacity=50;labelBackgroundColor=none;" parent="1" vertex="1" connectable="0">
           <mxGeometry x="920" y="420" as="geometry" />
         </mxCell>
-        <mxCell id="ftrRuj1jlcKmX2w6AbgE-4" value="" style="group" vertex="1" connectable="0" parent="1">
+        <mxCell id="ftrRuj1jlcKmX2w6AbgE-4" value="" style="group" parent="1" vertex="1" connectable="0">
           <mxGeometry x="240" y="160" width="155" height="120" as="geometry" />
         </mxCell>
         <mxCell id="IoBiIc19SofoyJkuLMO4-2" value="&lt;b&gt;图例&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="ftrRuj1jlcKmX2w6AbgE-4" vertex="1">
@@ -284,12 +284,12 @@
             <mxPoint x="-50" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ftrRuj1jlcKmX2w6AbgE-1" value="公" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="IoBiIc19SofoyJkuLMO4-4">
+        <mxCell id="ftrRuj1jlcKmX2w6AbgE-1" value="公" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="IoBiIc19SofoyJkuLMO4-4" vertex="1" connectable="0">
           <mxGeometry x="-0.5" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ftrRuj1jlcKmX2w6AbgE-2" value="母" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="IoBiIc19SofoyJkuLMO4-4">
+        <mxCell id="ftrRuj1jlcKmX2w6AbgE-2" value="母" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="IoBiIc19SofoyJkuLMO4-4" vertex="1" connectable="0">
           <mxGeometry x="0.5" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
@@ -311,7 +311,7 @@
             <mxPoint x="-45" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ftrRuj1jlcKmX2w6AbgE-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="ftrRuj1jlcKmX2w6AbgE-4">
+        <mxCell id="ftrRuj1jlcKmX2w6AbgE-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" parent="ftrRuj1jlcKmX2w6AbgE-4" vertex="1">
           <mxGeometry y="-10" width="155" height="130" as="geometry" />
         </mxCell>
       </root>
