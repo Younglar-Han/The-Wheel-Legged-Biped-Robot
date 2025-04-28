@@ -717,7 +717,7 @@ void LegFsm::Init()
 
 void LegFsm::HandleInput()
 {
-    Dr16 *p_dr16 = Dr16::Instance();
+    I6X *p_i6x = I6X::Instance();
     // if (relaxState)
     // {
     //     ChangeState(LegStateRelax::Instance());
@@ -728,12 +728,12 @@ void LegFsm::HandleInput()
     //     ChangeState(LegStateInit::Instance());
     //     return;
     // }
-    // if (Dr16::Instance()->QuerySwState(Dr16::RC_SW_L, Dr16::RC_SW_UP))
+    // if (I6X::Instance()->QuerySwState(I6X::RC_SW_L, I6X::RC_SW_UP))
     // {
     //     ChangeState(LegStateRemote::Instance());
     //     return;
     // }
-    // if (Dr16::Instance()->QuerySwState(Dr16::RC_SW_L, Dr16::RC_SW_DOWN))
+    // if (I6X::Instance()->QuerySwState(I6X::RC_SW_L, I6X::RC_SW_DOWN))
     // {
     //     ChangeState(LegStateRelax::Instance());
     //     return;

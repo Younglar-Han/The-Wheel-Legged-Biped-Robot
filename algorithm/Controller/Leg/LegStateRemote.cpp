@@ -12,13 +12,13 @@ void LegStateRemote::Enter(LegController* pOwner)
 
 void LegStateRemote::Execute(LegController* pOwner)
 {
-    Dr16* pDr16 = Dr16::Instance();
-    if(pDr16->QuerySwState(Dr16::RC_SW_R, Dr16::RC_SW_M2U))
+    I6X* pI6X = I6X::Instance();
+    if(pI6X->QuerySwState(I6X::RC_SW_R1, I6X::RC_SW_M2U))
     {
         pOwner->SetHeight(LegController::LEG_MID_HEIGHT);
     }
     
-    if(pDr16->QuerySwState(Dr16::RC_SW_R, Dr16::RC_SW_M2D))
+    if(pI6X->QuerySwState(I6X::RC_SW_R1, I6X::RC_SW_M2D))
     {
         pOwner->SetHeight(LegController::LEG_MIN_HEIGHT + 0.05f);
     }

@@ -4,7 +4,7 @@
 #include "StateMachine.hpp"
 #include "WheelController.hpp"
 #include "BoardPacket.hpp"
-#include "Dr16.hpp"
+#include "I6X.hpp"
 
 class WheelStateBalance : public State<WheelController>
 {

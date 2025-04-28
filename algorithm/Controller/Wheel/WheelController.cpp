@@ -480,15 +480,15 @@ void WheelFsm::Init()
 
 void WheelFsm::HandleInput()
 {
-    Dr16 *pDr16 = Dr16::Instance();
+    I6X *pI6X = I6X::Instance();
 
-    // if (pDr16->QuerySwState(Dr16::RC_SW_L, Dr16::RC_SW_DOWN))
+    // if (pI6X->QuerySwState(I6X::RC_SW_L, I6X::RC_SW_DOWN))
     // {
     //     ChangeState(WheelStateRelax::Instance());
     //     return;
     // }
 
-    // if (pDr16->QuerySwState(Dr16::RC_SW_L, Dr16::RC_SW_D2M))
+    // if (pI6X->QuerySwState(I6X::RC_SW_L, I6X::RC_SW_D2M))
     // {
     //     ChangeState(WheelStateInit::Instance());
     //     return;

@@ -19,11 +19,11 @@ void WheelStateBalance::Execute(WheelController *pOwner)
 {
     pOwner->MotivateWheel();
     
-    Dr16* pDr16 = Dr16::Instance();
+    I6X* pI6X = I6X::Instance();
 
-    pOwner->SetSdot(pDr16->GetLVAxis());
+    pOwner->SetSdot(pI6X->GetLVAxis());
     pOwner->SetDeltaYaw(0.0f);
-    pOwner->SetYawDot(pDr16->GetRHAxis());
+    pOwner->SetYawDot(pI6X->GetRHAxis());
 
     pOwner->SetVmcMode(true);
     pOwner->SetRelaxMode(false);
