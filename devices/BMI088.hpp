@@ -31,7 +31,6 @@ public:
 	float GetWy(){return m_wy;}
 	float GetWz(){return m_wz;}
     float GetTemperature(){return temperature;}
-    void setTemperature(float _temperature){temperature = _temperature;}
 private:
 
     float m_ax;
