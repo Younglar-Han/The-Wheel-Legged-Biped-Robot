@@ -65,25 +65,29 @@ void main_task(void const * argument)
 
     BMI088::Instance()->BspInit();
     can_filter_init();
+    AHRSEstimator::Instance()->SetImu(bmi088);
+    AHRSEstimator::Instance()->Init();
 
     testbot.Init();
     while(1)
     {
         Time::Tick();
 
-        I6X::Instance()->Update();
-
-        CanMsgDispatcher::Instance()->Update();
-
-        BMI088::Instance()->Update();
-        AHRSEstimator::Instance()->Update();
+        I6X::Instance()->Update(); 
 
         testbot.Tick();
 
         if (Time::GetTick() % 2 == 0)
+        {
             LKCanMotorCommander::Instance()->Update();
-
-        CanManager::Instance()->Update();
+            BMI088::Instance()->Update();
+        }
+        else if (Time::GetTick() % 2 == 1)
+        {
+            CanMsgDispatcher::Instance()->Update();
+            AHRSEstimator::Instance()->Update();
+            CanManager::Instance()->Update();
+        }
 
         if  (is_init == false)
         {

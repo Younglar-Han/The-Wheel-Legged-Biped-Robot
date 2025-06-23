@@ -11,7 +11,7 @@
 // #include "bsp_io.h"
 
 
-// VMC没必要动HT的速度环和位置环内参
+// HT的速度环和位置环内参 VMC无需调整此处
 const float LegController::HT04StandardSpeedKp = 300.0f; // origin 200f   0203 14:40
 const float LegController::HT04StandardSpeedKi = 1.0f;
 const float LegController::HT04StandardSpeedKd = 100.0f; // origin 50f    0204 11:17
@@ -25,6 +25,7 @@ const float LegController::HT04StandardPosKd = 0.0f;      // origin 0.0f  0203 1
 const float LegController::HT04StandardPosMaxout = 8.0f;  // origin 8.0f  0203 14:28
 const float LegController::HT04StandardPosIMaxout = 0.0f; // origin 0.0f  0203 15:01
 
+// Height PID参数
 const float LegController::HEIGHT_KP = 1500.0f; // origin 500f  0204 15:30
 const float LegController::HEIGHT_KI = 1.0f;
 const float LegController::HEIGHT_KD = 6000.0f;    // origin 6000f  0203 16:30
@@ -35,22 +36,29 @@ const float LegController::HEIGHT_INIT_KI = 0.1f;
 const float LegController::HEIGHT_INIT_KD = 3000.0f;    // origin 6000f  0203 16:30
 const float LegController::HEIGHT_INIT_MAXOUT = 500.0f; // origin 140f 0204 23:04
 const float LegController::HEIGHT_INIT_IMAXOUT = 30.0f;
+
+// Roll PID参数
 const float LegController::ROLL_KP = 600.0f; // origin 100f   0203 19:53
 const float LegController::ROLL_KI = 0.01f;
 const float LegController::ROLL_KD = 25.0f;      // origin 150f   0203 14:05
 const float LegController::ROLL_MAXOUT = 250.0f; // origin 50f    0203 16:30
 const float LegController::ROLL_IMAXOUT = 20.0f; // origin 10.0f  0203 15:27
+
+// Jump PID参数
 const float LegController::JUMP_KP = 100.0f;
 const float LegController::JUMP_KI = 0.0f;
 const float LegController::JUMP_KD = 0.0f;
 const float LegController::JUMP_MAXOUT = 100.0f;
 const float LegController::JUMP_IMAXOUT = 10.0f;
-const float LegController::LEG_LENGTH_1 = 0.27f;
-const float LegController::LEG_LENGTH_2 = 0.15f;
-const float LegController::LEG_LENGTH_3 = 0.115f;
+
+// 腿长参数
+// TODO: 需要修改
+const float LegController::LEG_LENGTH_1 = 0.27f;  // 小腿长度
+const float LegController::LEG_LENGTH_2 = 0.15f;  // 大腿长度
+const float LegController::LEG_LENGTH_3 = 0.115f; // 关节连接点间距
 const float LegController::LEG_MID_HEIGHT = 0.21f; // VMC常态高度        0204 21:30
 const float LegController::LEG_MAX_HEIGHT = 0.38f; // VMC最大高度        0204 21:30
-const float LegController::LEG_MIN_HEIGHT = 0.12f; // VMC最小高度        0204 21:30
+const float LegController::LEG_MIN_HEIGHT = 0.17f; // VMC最小高度        0204 21:30
 const float LegController::G = 9.8f;
 
 LegController::LegController() : ControllerEntity(ECT_LegController),
@@ -84,13 +92,17 @@ void LegController::Init()
     SetDefaultTicksToUpdate(2);
 
     // 海泰电机注册 以车前进方向（目前为电池安装方向）为正，左前方设置为1，逆时针递增标号，123于CAN1，4于CAN2
-    for (int i = 0; i < LMT_LENGTH - 1; ++i)
+    for (int i = 0; i < LMT_LENGTH - 2; ++i)
     {
         m_LegMotor[i].RegistMotor(CAN1, 0x01 + i);
         m_LegMotor[i].controlMode = Motor::CUR_MODE;
         m_LegMotor[i].pidSpeed.SetParams(HT04StandardSpeedKp, HT04StandardSpeedKi, HT04StandardSpeedKd, HT04StandardSpeedMaxout, HT04StandardSpeedIMaxout);
         m_LegMotor[i].pidPosition.SetParams(HT04StandardPosKp, HT04StandardPosKi, HT04StandardPosKd, HT04StandardPosMaxout, HT04StandardPosIMaxout);
     }
+    m_LegMotor[2].RegistMotor(CAN2, 0x03);
+    m_LegMotor[2].controlMode = Motor::CUR_MODE;
+    m_LegMotor[2].pidSpeed.SetParams(HT04StandardSpeedKp, HT04StandardSpeedKi, HT04StandardSpeedKd, HT04StandardSpeedMaxout, HT04StandardSpeedIMaxout);
+    m_LegMotor[2].pidPosition.SetParams(HT04StandardPosKp, HT04StandardPosKi, HT04StandardPosKd, HT04StandardPosMaxout, HT04StandardPosIMaxout);
     m_LegMotor[3].RegistMotor(CAN2, 0x04);
     m_LegMotor[3].controlMode = Motor::CUR_MODE;
     m_LegMotor[3].pidSpeed.SetParams(HT04StandardSpeedKp, HT04StandardSpeedKi, HT04StandardSpeedKd, HT04StandardSpeedMaxout, HT04StandardSpeedIMaxout);
@@ -193,30 +205,40 @@ void LegController::UpdateStateVariables()
 {
     // 腿部五连杆模型解算，计算腿部倾角和腿长，及更新各种所需变量
 
+    // 存档状态变量
     last_theta_l = theta_l;
     last_theta_r = theta_r;
     last_length_l = length_l;
     last_length_r = length_r;
 
-    float theta4 = -(m_LegMotor[LMT_LeftFront].sensorFeedBack.positionFdb + 1.832596f) + 1.22173f;
-    float theta1 = -(m_LegMotor[LMT_LeftRear].sensorFeedBack.positionFdb - 0.691456f - 1.145140f) + 1.919810f; // 哼哼哼啊啊啊啊啊啊啊啊啊♂
+    // 前一个值是总可旋转角度，后一个是俯角（其实无所谓，两个值完全可以合一，具体含义可以看whx的五连杆解算）
+    // 左腿五连杆解算
+    // 获取电机反馈角度
+    float theta4 = -(m_LegMotor[LMT_LeftFront].sensorFeedBack.positionFdb);
+    float theta1 = -(m_LegMotor[LMT_LeftRear].sensorFeedBack.positionFdb) + 3.141593f; // 哼哼哼啊啊啊啊啊啊啊啊啊♂
+    // 计算连杆端点坐标
     float xd = LEG_LENGTH_2 * cos(theta4) + LEG_LENGTH_3 / 2;
     float yd = LEG_LENGTH_2 * sin(theta4);
     float xb = LEG_LENGTH_2 * cos(theta1) - LEG_LENGTH_3 / 2;
     float yb = LEG_LENGTH_2 * sin(theta1);
+    // 计算中间变量
     float A0 = 2 * LEG_LENGTH_1 * (xd - xb);
     float B0 = 2 * LEG_LENGTH_1 * (yd - yb);
     float lbd = sqrt((xb - xd) * (xb - xd) + (yb - yd) * (yb - yd));
     float C0 = lbd * lbd;
+    // 计算中间连杆角度theta2
     float theta2 = 2 * atan2(B0 + sqrt(A0 * A0 + B0 * B0 - C0 * C0), A0 + C0);
+    // 计算末端点坐标
     float xc = LEG_LENGTH_2 * cos(theta1) + LEG_LENGTH_1 * cos(theta2) - LEG_LENGTH_3 / 2;
     float yc = LEG_LENGTH_2 * sin(theta1) + LEG_LENGTH_1 * sin(theta2);
-    length_l = sqrt(xc * xc + yc * yc);
-    theta_l = PI / 2 - (atan2(yc, -xc) - m_IMU->GetPitch()); ///////////////////!!!!! 在ATAN2 加了负号
-    phi0_l = atan2(yc, xc);
+    // 计算腿长和角度
+    length_l = sqrt(xc * xc + yc * yc); // 左腿长
+    theta_l = PI / 2 - (atan2(yc, -xc) - m_IMU->GetPitch()); //左腿角度 ///////////////////!!!!! 在ATAN2 加了负号
+    phi0_l = atan2(yc, xc); // 基准角度
 
-    theta4 = (m_LegMotor[LMT_RightFront].sensorFeedBack.positionFdb - 1.832596f) + 1.22173f;             // 前一个值是总可旋转角度，后一个是俯角（其实无所谓，两个值完全可以合一，具体含义可以看whx的五连杆解算）
-    theta1 = (m_LegMotor[LMT_RightRear].sensorFeedBack.positionFdb + 0.691456f + 1.145140f) + 1.919810f; // 前一个值是总可旋转角度，后一个是俯角补角，怎么来的不知道，反正推断的-Rededge 0203  17：00
+    // 右腿五连杆解算
+    theta4 = (m_LegMotor[LMT_RightFront].sensorFeedBack.positionFdb);             // 前一个值是总可旋转角度，后一个是俯角（其实无所谓，两个值完全可以合一，具体含义可以看whx的五连杆解算）
+    theta1 = (m_LegMotor[LMT_RightRear].sensorFeedBack.positionFdb) + 3.141593f; // 前一个值是总可旋转角度，后一个是俯角补角，怎么来的不知道，反正推断的-Rededge 0203  17：00
     xd = LEG_LENGTH_2 * cos(theta4) + LEG_LENGTH_3 / 2;
     yd = LEG_LENGTH_2 * sin(theta4);
     xb = LEG_LENGTH_2 * cos(theta1) - LEG_LENGTH_3 / 2;
@@ -232,6 +254,7 @@ void LegController::UpdateStateVariables()
     theta_r = PI / 2 - (atan2(yc, -xc) - m_IMU->GetPitch());
     phi0_r = atan2(yc, xc);
 
+    // IMU数据更新
     zm = m_IMU->get_m_a(2) - 9.81f;
 
     last_length_l_dot = length_l_dot;
@@ -239,6 +262,7 @@ void LegController::UpdateStateVariables()
     last_theta_l_dot = theta_l_dot;
     last_theta_r_dot = theta_r_dot;
 
+    // 差分计算伸缩速度，采样周期为2ms
     length_l_dot = (length_l - last_length_l) / 0.002f;
     length_r_dot = (length_r - last_length_r) / 0.002f;
     theta_l_dot = (theta_l - last_theta_l) / 0.002f;
@@ -299,10 +323,11 @@ void LegController::CalcJacob()
     float l_a = LEG_LENGTH_3 / 2;
     float l_u = LEG_LENGTH_2;
 
-    theta1_l = m_LegMotor[LMT_LeftFront].sensorFeedBack.positionFdb + 3.752458f;   // HT02
-    theta2_l = -m_LegMotor[LMT_LeftRear].sensorFeedBack.positionFdb + 3.752458f;   // HT01
-    theta1_r = -m_LegMotor[LMT_RightFront].sensorFeedBack.positionFdb + 3.752458f; // HT04 2 HT05
-    theta2_r = m_LegMotor[LMT_RightRear].sensorFeedBack.positionFdb + 3.752458f;   // HT03        还没更新
+    // TODO: 更改电机角度转化
+    theta1_l = m_LegMotor[LMT_LeftFront].sensorFeedBack.positionFdb + 3.141593f;   // HT02
+    theta2_l = -m_LegMotor[LMT_LeftRear].sensorFeedBack.positionFdb + 3.141593f;   // HT01
+    theta1_r = -m_LegMotor[LMT_RightFront].sensorFeedBack.positionFdb + 3.141593f; // HT04 2 HT05
+    theta2_r = m_LegMotor[LMT_RightRear].sensorFeedBack.positionFdb + 3.141593f;   // HT03        还没更新
 
     float x_1_left = l_a - l_u * cos(theta1_l);
     float y_1_left = l_u * sin(theta1_l);
@@ -392,8 +417,8 @@ void LegController::LeaveGround()
     FN_R = P_R + m_w * G + m_w * (zm - length_r_ddot * cos(theta_r) + 2.0f * length_r_dot * theta_r_dot * sin(theta_r) + length_r * theta_r_ddot * sin(theta_r) + length_r * theta_r_dot * theta_r_dot * cos(theta_r));
 
     // 支持力小于一定值时，最大静摩擦不足以支持系统稳定，则认为离地
-    l_leave_ground = (FN_L < 17.0f);
-    r_leave_ground = (FN_R < 17.0f);
+    l_leave_ground = (FN_L < 10.0f);
+    r_leave_ground = (FN_R < 10.0f);
 }
 
 void LegController::CalcF()
@@ -435,8 +460,9 @@ void LegController::CalcF()
     float rollResult = rollPid.result - rollPid.dResult + m_IMU->tmp_m_gyro[1] * ROLL_KD;
 
     // 左右侧重力补偿，根据实际情况测量得到（rollPID和腿长PID加i，观察最终两侧输出F值）
-    float left_gravity = 80.0f;
-    float right_gravity = 80.0f;
+    // TODO: 需要根据实际情况测量得到
+    float left_gravity = 20.0f;
+    float right_gravity = 20.0f;
 
     // 跳跃瞬间需要给一个较大的力
     float left_jump = 250.0f;
@@ -578,23 +604,23 @@ void LegController::CalcMotorTorque()
 
 void LegController::SetMotorTorque()
 {
-    // float torquemax = 30.0f;
-    // float torquemin = -30.0f;
+    float torquemax = 30.0f;
+    float torquemin = -30.0f;
 
-    // torque_lf = Math::FloatConstrain(torque_lf, torquemin, torquemax);
-    // torque_lr = Math::FloatConstrain(torque_lr, torquemin, torquemax);
-    // torque_rf = Math::FloatConstrain(torque_rf, torquemin, torquemax);
-    // torque_rr = Math::FloatConstrain(torque_rr, torquemin, torquemax);
+    torque_lf = Math::FloatConstrain(torque_lf, torquemin, torquemax);
+    torque_lr = Math::FloatConstrain(torque_lr, torquemin, torquemax);
+    torque_rf = Math::FloatConstrain(torque_rf, torquemin, torquemax);
+    torque_rr = Math::FloatConstrain(torque_rr, torquemin, torquemax);
 
-    // m_LegMotor[LMT_LeftFront].torqueSet = torque_lf;
-    // m_LegMotor[LMT_LeftRear].torqueSet = -torque_lr;
-    // m_LegMotor[LMT_RightFront].torqueSet = -torque_rf;
-    // m_LegMotor[LMT_RightRear].torqueSet = torque_rr;
+    m_LegMotor[LMT_LeftFront].torqueSet = torque_lf;
+    m_LegMotor[LMT_LeftRear].torqueSet = -torque_lr;
+    m_LegMotor[LMT_RightFront].torqueSet = -torque_rf;
+    m_LegMotor[LMT_RightRear].torqueSet = torque_rr;
 
-    m_LegMotor[LMT_LeftFront].torqueSet = 0.0f;
-    m_LegMotor[LMT_LeftRear].torqueSet = 0.0f;
-    m_LegMotor[LMT_RightFront].torqueSet = 0.0f;
-    m_LegMotor[LMT_RightRear].torqueSet = 0.0f;
+    // m_LegMotor[LMT_LeftFront].torqueSet = 0.0f;
+    // m_LegMotor[LMT_LeftRear].torqueSet = 0.0f;
+    // m_LegMotor[LMT_RightFront].torqueSet = 0.0f;
+    // m_LegMotor[LMT_RightRear].torqueSet = 0.0f;
 }
 
 void LegController::SetPos(float pos)
@@ -717,26 +743,28 @@ void LegFsm::Init()
 
 void LegFsm::HandleInput()
 {
-    I6X *p_i6x = I6X::Instance();
-    // if (relaxState)
-    // {
-    //     ChangeState(LegStateRelax::Instance());
-    //     return;
-    // }
-    // if (initState)
-    // {
-    //     ChangeState(LegStateInit::Instance());
-    //     return;
-    // }
-    // if (I6X::Instance()->QuerySwState(I6X::RC_SW_L, I6X::RC_SW_UP))
-    // {
-    //     ChangeState(LegStateRemote::Instance());
-    //     return;
-    // }
-    // if (I6X::Instance()->QuerySwState(I6X::RC_SW_L, I6X::RC_SW_DOWN))
-    // {
-    //     ChangeState(LegStateRelax::Instance());
-    //     return;
-    // }
+    I6X *pI6X = I6X::Instance();
+    if (pI6X->QuerySwState(I6X::RC_SW_L1, I6X::RC_SW_UP))
+    {
+        // 急停保护
+        ChangeState(LegStateRelax::Instance());
+        return;
+    }
+    if (pI6X->QuerySwState(I6X::RC_SW_R1, I6X::RC_SW_M2D))
+    {
+        ChangeState(LegStateInit::Instance());
+        return;
+    }
+    if (pI6X->QuerySwState(I6X::RC_SW_R1, I6X::RC_SW_DOWN))
+    {
+        ChangeState(LegStateBalance::Instance());
+        return;
+    }
+    if (pI6X->QuerySwState(I6X::RC_SW_R2, I6X::RC_SW_DOWN))
+    {
+        ChangeState(LegStateRelax::Instance());
+        return;
+    }
+
     ChangeState(LegStateRelax::Instance());
 }

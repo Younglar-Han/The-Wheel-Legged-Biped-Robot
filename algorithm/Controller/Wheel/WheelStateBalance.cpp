@@ -33,7 +33,7 @@ void WheelStateBalance::Execute(WheelController *pOwner)
     float target_pitch = acos(Math::FloatConstrain(cos(pitch) / (sqrt(sin(yaw) * sin(yaw) * cos(pitch) * cos(pitch) + cos(yaw) * cos(yaw))), -1.0f, 1.0f));
     target_pitch = ((fabs(yaw) < PI / 2 && pitch < 0) || (fabs(yaw) > PI / 2 && pitch > 0)) ? target_pitch : -target_pitch;
     // target_pitch = 0.0f;
-    pOwner->SetPitch(0.0f);
+    pOwner->SetPitch(target_pitch);
     pOwner->SetCosPitch(cos(pitch) / (sqrt(sin(yaw) * sin(yaw) * cos(pitch) * cos(pitch) + cos(yaw) * cos(yaw))));
 }
 
