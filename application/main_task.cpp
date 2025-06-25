@@ -76,7 +76,7 @@ void main_task(void const * argument)
         I6X::Instance()->Update(); 
 
         testbot.Tick();
-
+        CanMsgDispatcher::Instance()->Update();
         if (Time::GetTick() % 2 == 0)
         {
             LKCanMotorCommander::Instance()->Update();
@@ -84,10 +84,9 @@ void main_task(void const * argument)
         }
         else if (Time::GetTick() % 2 == 1)
         {
-            CanMsgDispatcher::Instance()->Update();
             AHRSEstimator::Instance()->Update();
-            CanManager::Instance()->Update();
         }
+        CanManager::Instance()->Update();
 
         if  (is_init == false)
         {

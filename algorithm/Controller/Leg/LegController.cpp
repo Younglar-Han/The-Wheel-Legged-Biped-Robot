@@ -750,19 +750,14 @@ void LegFsm::HandleInput()
         ChangeState(LegStateRelax::Instance());
         return;
     }
-    if (pI6X->QuerySwState(I6X::RC_SW_R1, I6X::RC_SW_M2D))
+    if (pI6X->QuerySwState(I6X::RC_SW_R2, I6X::RC_SW_M2D))
     {
         ChangeState(LegStateInit::Instance());
         return;
     }
-    if (pI6X->QuerySwState(I6X::RC_SW_R1, I6X::RC_SW_DOWN))
-    {
-        ChangeState(LegStateBalance::Instance());
-        return;
-    }
     if (pI6X->QuerySwState(I6X::RC_SW_R2, I6X::RC_SW_DOWN))
     {
-        ChangeState(LegStateRelax::Instance());
+        ChangeState(LegStateBalance::Instance());
         return;
     }
 

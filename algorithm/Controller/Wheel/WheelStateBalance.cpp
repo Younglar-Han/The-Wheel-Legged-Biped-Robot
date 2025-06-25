@@ -21,9 +21,9 @@ void WheelStateBalance::Execute(WheelController *pOwner)
     
     I6X* pI6X = I6X::Instance();
 
-    pOwner->SetSdot(pI6X->GetLVAxis());
+    pOwner->SetSdot(5*(pI6X->GetLVAxis()));
     pOwner->SetDeltaYaw(0.0f);
-    pOwner->SetYawDot(pI6X->GetRHAxis());
+    pOwner->SetYawDot(-5*(pI6X->GetRHAxis()));
 
     pOwner->SetVmcMode(true);
     pOwner->SetRelaxMode(false);
