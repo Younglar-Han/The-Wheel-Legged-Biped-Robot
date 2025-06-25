@@ -29,10 +29,10 @@ extern "C" {
 #define NULL 0
 #define RC_FRAME_LENGTH 25u
 
-#define RC_CH_VALUE_MIN         ((uint16_t)364)
+#define RC_CH_VALUE_MIN         ((uint16_t)240)
 #define RC_CH_VALUE_OFFSET      ((uint16_t)1024)
-#define RC_CH_VALUE_MAX         ((uint16_t)1684)
-#define RC_CH_OFFSET_MAX        ((uint16_t)660)
+#define RC_CH_VALUE_MAX         ((uint16_t)1807)
+#define RC_CH_OFFSET_MAX        ((uint16_t)750)
 
 /* ----------------------- RC Switch Definition----------------------------- */
 // #define RC_SW_UP                ((uint16_t)1)

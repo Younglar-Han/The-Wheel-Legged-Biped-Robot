@@ -32,6 +32,7 @@ void BMI088::Update()
     TemperatruePid.ref = 42.0f;
     TemperatruePid.fdb = temperature;
     TemperatruePid.UpdateResult();
-    uint16_t pwmresult = (uint16_t)(TemperatruePid.result);
+    uint16_t pwmresult = (TemperatruePid.result < 0) ? 0 : (uint16_t)TemperatruePid.result;
+    // 确保float强转uint16_t时不出现负数转为补码导致IMU烧毁
     bsp_pwm_set(pwmresult);//设置占空比
 }

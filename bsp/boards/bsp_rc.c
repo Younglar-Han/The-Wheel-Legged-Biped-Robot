@@ -198,19 +198,20 @@ static void SBUS_TO_RC(volatile const uint8_t *sbus_buf, RC_raw_t *rc_raw)
 
     bsp_set_update_flag();
 
-    // for (int i = 0; i < 4; i++)
-    // {
-    //     if (rc_raw->rc.s[i] < 240 + 128)
-    //     {
-    //         rc_raw->rc.s[i] = RC_SW_UP;
-    //     }
-    //     else if (rc_raw->rc.s[i] > 1807 - 128)
-    //     {
-    //         rc_raw->rc.s[i] = RC_SW_DOWN;
-    //     }
-    //     else
-    //     {
-    //         rc_raw->rc.s[i] = RC_SW_MID;
-    //     }
-    // }
+    for (int i = 0; i < 4; i++)
+    {
+        if (rc_raw->rc.s[i] < 240 + 128)
+        {
+            rc_raw->rc.s[i] = 1;
+        }
+        else if (rc_raw->rc.s[i] > 1807 - 128)
+        {
+            rc_raw->rc.s[i] = 3;
+        }
+        else
+        {
+            if (i == 2)  // Only for switch C
+                rc_raw->rc.s[i] = 2;
+        }
+    }
 }

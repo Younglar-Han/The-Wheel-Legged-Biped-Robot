@@ -120,9 +120,9 @@ void AHRSEstimator::Update()
     gyro_filter[1].Update();
     gyro_filter[2].Update(); //?
 
-    tmp_m_gyro[0] = m_pImuOnChip->GetWy() + 0.00203253538f;  // - 0.00017f;
-    tmp_m_gyro[1] = -m_pImuOnChip->GetWx() + 0.00397365214f; // + 0.003f;
-    tmp_m_gyro[2] = m_pImuOnChip->GetWz() - 0.000891535659f; // - 0.00038f;//ID=4
+    tmp_m_gyro[0] = m_pImuOnChip->GetWy();  // - 0.00017f;
+    tmp_m_gyro[1] = -m_pImuOnChip->GetWx(); // + 0.003f;
+    tmp_m_gyro[2] = m_pImuOnChip->GetWz() - 0.006f; // - 0.00038f;//ID=4
 
     // tmp_m_gyro[0] = m_pImuOnChip->GetWy() + 0.00203253538f;  // - 0.00017f;
     // tmp_m_gyro[1] = -m_pImuOnChip->GetWx() + 0.00397365214f - 0.00418124394f; // + 0.003f;

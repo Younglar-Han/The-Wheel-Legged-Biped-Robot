@@ -3,13 +3,13 @@
 
 #include "StateMachine.hpp"
 #include "WheelController.hpp"
-#include "Dr16.hpp"
+#include "I6X.hpp"
 #include "AHRSEstimator.hpp"
 
 class WheelStateRemote : public State<WheelController>
 {
 private:
-    Dr16 *m_pDr16;
+    I6X *m_pI6X;
     AHRSEstimator* m_IMU;
 
     float target_yaw;
